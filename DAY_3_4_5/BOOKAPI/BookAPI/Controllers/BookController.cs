@@ -19,7 +19,7 @@ namespace BookAPI.Controllers
             _bookService = bookService;
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public IActionResult GetAllBooks()
         {
             var result = _bookService.GetAllBooks();
@@ -86,23 +86,6 @@ namespace BookAPI.Controllers
             }
             return Ok("Book data Deleted Successfully of bookId : " + id);
         }
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // day 4
         [Authorize(Roles = "Admin")]
