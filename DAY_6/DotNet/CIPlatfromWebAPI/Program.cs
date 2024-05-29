@@ -32,6 +32,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddScoped<BALLogin>();
 builder.Services.AddScoped<DALLogin>();
+builder.Services.AddScoped<BALAdminUser>();
+builder.Services.AddScoped<DALAdminUser>();
 builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddCors(option =>
