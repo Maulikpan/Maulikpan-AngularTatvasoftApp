@@ -36,7 +36,7 @@ namespace Web_API.Controllers
         }*/
         [HttpPost]
         [Route("LoginUser")]
-        public ResponseResult LoginUser(User user)
+        public ResponseResult LoginUser(LoginUserModel user)
         {
             try
             {

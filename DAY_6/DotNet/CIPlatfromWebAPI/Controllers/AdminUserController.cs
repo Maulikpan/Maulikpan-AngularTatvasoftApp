@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web_API.Controllers
-{ 
-
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AdminUserController : ControllerBase
