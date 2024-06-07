@@ -36,7 +36,10 @@ export class MissionskillComponent implements OnInit {
       }
     },err => this.toast.error({detail:"ERROR",summary:err.message,duration:3000}));
   }
-
+  openDeleteSkillModal(id: any) {
+    this.skillId = id;
+    this.deleteSkillmodal.show();
+  }
  
   CloseDeleteSkillModal()
   {

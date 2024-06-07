@@ -90,6 +90,9 @@ export class UpdateUserComponent implements OnInit {
     this.formValid = true;
     if (this.updateForm.valid) {
       let updatedUserData = this.updateForm.value;
+      updatedUserData.isDeleted = false;
+      updatedUserData.userType ='user';
+      console.log(updatedUserData)
        this.service.UpdateUser(updatedUserData).subscribe((data: any) => {
         if(data.result == 1)
           {

@@ -17,10 +17,12 @@ export class AdminsideServiceService {
     public router: Router
   ) {}
   // apiUrl:string='http://localhost:63943/api';
-  apiUrl: string = 'https://localhost:7022/api';
-  imageUrl: string = 'https://localhost:7022';
+  apiUrl: string = 'http://localhost:5140/api';
+  imageUrl: string = 'http://localhost:5140';
+
 
   //User
+
   UserList(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/AdminUser/UserDetailList`);
   }
@@ -93,10 +95,11 @@ export class AdminsideServiceService {
     );
   }
 
-  MissionApplicationDelete(data: MissionApplication){
-    return this.http.post(`${this.apiUrl}/Mission/MissionApplicationDelete`, data);
+  MissionApplicationDelete(data: any) {
+    return this.http.delete(
+     ` ${this.apiUrl}/Mission/MissionApplicationDelete/${data}`
+    );
   }
-
   MissionApplicationApprove(data: MissionApplication){
     return this.http.post(`${this.apiUrl}/Mission/MissionApplicationApprove`, data);
   }
@@ -147,9 +150,9 @@ export class AdminsideServiceService {
       data
     );
   }
-  DeleteMissionSkill(data: any) {
+  DeleteMissionSkill(id: any) {
     return this.http.delete(
-      `${this.apiUrl}/MissionSkill/DeleteMissionSkill/${data}`
+      `${this.apiUrl}/MissionSkill/DeleteMissionSkill/${id}`
     );
   }
 }

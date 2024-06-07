@@ -24,9 +24,11 @@ export class UserComponent implements OnInit {
     );
   }
   FetchUserList(){
+    console.log(data)
     this.service.UserList().subscribe((data:any)=>{
-      if(data.result == 1)
+      if(data.result ==1)
       {
+        
         this.userList = data.data;
       }
       else
@@ -36,6 +38,11 @@ export class UserComponent implements OnInit {
     },err=>this.toast.error({detail:"ERROR",summary:err.error.message,duration:3000}));
   }
 
+
+  openDeleteModal(id: any) {
+    this.userId = id;
+    this.deleteModal.show();
+  }
   
   CloseRemoveMissionModal(){
     this.deleteModal.hide();
@@ -46,7 +53,7 @@ export class UserComponent implements OnInit {
       {
           this.toast.success({detail:"SUCCESS",summary:data.data,duration:3000});
           setTimeout(() => {
-            this.deleteModal.hide();
+          this.deleteModal.hide();
           window.location.reload();
           }, 1000);
       }

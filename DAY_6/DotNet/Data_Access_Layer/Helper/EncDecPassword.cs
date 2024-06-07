@@ -22,7 +22,7 @@ namespace Data_Access_Layer.Helper
 
         public static string DecryptPassword(string password)
         {
-            if (string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(password))     
             {
                 return "";
             }

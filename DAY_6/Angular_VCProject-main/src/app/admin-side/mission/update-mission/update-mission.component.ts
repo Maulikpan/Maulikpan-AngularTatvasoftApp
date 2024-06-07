@@ -47,6 +47,13 @@ export class UpdateMissionComponent implements OnInit {
           missionThemeId: ['', Validators.compose([Validators.required])],
           missionSkillId: ['', Validators.compose([Validators.required])],
           missionImages: [''],
+          missionType: [''],
+          missionOrganisationName: ['', Validators.compose([Validators.required])],
+          missionOrganisationDetail: ['', Validators.compose([Validators.required])],
+          registrationDeadline: ['', Validators.compose([Validators.required])],
+          missionDocuments: ['', Validators.compose([Validators.required])],
+          missionAvailability: ['', Validators.compose([Validators.required])],
+          missionVideoUrl: ['', Validators.compose([Validators.required])]
       });
       if (this.missionId != 0) {
           this.FetchDetail(this.missionId);
@@ -96,7 +103,7 @@ export class UpdateMissionComponent implements OnInit {
     }
   }
   GetMissionSkillList(){
-      this.service.GetMissionSkillList().subscribe((data:any)=>{
+      this.service.MissionSkillList().subscribe((data:any)=>{
         if(data.result==1)
         {
           this.missionSkillList = data.data;
@@ -107,7 +114,7 @@ export class UpdateMissionComponent implements OnInit {
       },err=>this.toast.error({detail:"ERROR",summary:err.message,duration:3000}))
   }
   GetMissionThemeList(){
-    this.service.GetMissionThemeList().subscribe((data:any)=>{
+    this.service.MissionThemeList().subscribe((data:any)=>{
       if(data.result==1)
       {
         this.missionThemeList = data.data;
@@ -125,8 +132,10 @@ export class UpdateMissionComponent implements OnInit {
           this.editData.startDate = startDateformat;
           let endDateformat = this.datePipe.transform(this.editData.endDate,"yyyy-MM-dd");
           this.editData.endDate = endDateformat;
-          let registrationDeadLineDateformat = this.datePipe.transform(this.editData.registrationDeadLine,"yyyy-MM-dd");
-          this.editData.registrationDeadLine = registrationDeadLineDateformat;
+          let registrationDeadLineDateformat = this.datePipe.transform(this.editData.registrationDeadline,"yyyy-MM-dd");
+          this.editData.registrationDeadline = registrationDeadLineDateformat;
+          // let registrationDeadLineDateformat = this.datePipe.transform(this.editData.registrationDeadLine,"yyyy-MM-dd");
+          // this.editData.registrationDeadLine = registrationDeadLineDateformat;
           this.editMissionForm = this.fb.group({
               id:[this.editData.id],
               missionTitle:[this.editData.missionTitle,Validators.compose([Validators.required])],
@@ -138,7 +147,14 @@ export class UpdateMissionComponent implements OnInit {
               totalSheets:[this.editData.totalSheets,Validators.compose([Validators.required])],
               missionThemeId:[this.editData.missionThemeId,Validators.compose([Validators.required])],
               missionSkillId:[this.editData.missionSkillId.split(','),Validators.compose([Validators.required])],
-              missionImages:[''],              
+              missionImages:[''],     
+              missionType:[this.editData.missionType] ,
+              missionOrganisationName: [this.editData.missionOrganisationName, Validators.compose([Validators.required])],
+              missionOrganisationDetail: [this.editData.missionOrganisationDetail, Validators.compose([Validators.required])],
+              registrationDeadline: [this.editData.registrationDeadline],
+              missionDocuments: [this.editData.missionDocuments, Validators.compose([Validators.required])],
+              missionAvailability: [this.editData.missionAvailability],
+              missionVideoUrl: [this.editData.missionVideoUrl, Validators.compose([Validators.required])]
           });
           this.service.CityList(this.editData.countryId).subscribe((data:any)=>{
                 this.cityList = data.data;
@@ -162,6 +178,14 @@ export class UpdateMissionComponent implements OnInit {
   get missionThemeId() { return this.editMissionForm.get('missionThemeId') as FormControl; }
   get missionSkillId() { return this.editMissionForm.get('missionSkillId') as FormControl; }
   get missionImages() { return this.editMissionForm.get('missionImages') as FormControl; }
+  get totalSheets() { return this.editMissionForm.get('totalSheets') as FormControl; }
+  get missionType() {return this.editMissionForm.get('missionType') as FormControl; }
+  get missionOrganisationName() {return this.editMissionForm.get('missionOrganisationName') as FormControl; }
+  get missionOrganisationDetail() {return this.editMissionForm.get('missionOrganisationDetail') as FormControl; }
+  get registrationDeadline() {return this.editMissionForm.get('registrationDeadline') as FormControl; }
+  get missionDocuments() {return this.editMissionForm.get('missionDocuments') as FormControl; }
+  get missionAvailability() {return this.editMissionForm.get('missionAvailability') as FormControl; }
+  get missionVideoUrl() {return this.editMissionForm.get('missionVideoUrl') as FormControl; }
 
 
   OnSelectedImage(event:any){
@@ -190,7 +214,7 @@ export class UpdateMissionComponent implements OnInit {
     }
   }
 
-async OnSubmit(){debugger;
+async OnSubmit(){
   this.formValid = true;
   let value = this.editMissionForm.value;
   let updateImageUrl = '';

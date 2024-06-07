@@ -111,7 +111,7 @@ export class UsereditprofileComponent implements OnInit {
     let value = {
       skill:this.skillList1.join(','),
       userId:this.loginUserId
-    }
+    } 
     this.service.AddUserSkill(value).subscribe((data:any)=>{
         if(data.result == 1)
         {
@@ -127,7 +127,7 @@ export class UsereditprofileComponent implements OnInit {
     },err=>this.toast.error({detail:"ERROR",summary:err.message}));
   }
   GetUserSkill(){
-    this.service.GetUserSkill(this.loginUserId).subscribe((data:any)=>{debugger;
+    this.service.GetUserSkill(this.loginUserId).subscribe((data:any)=>{
       if(data.result == 1)
       {
         if(data.data.length > 0){
@@ -229,6 +229,7 @@ export class UsereditprofileComponent implements OnInit {
             if(data.result == 1)
             {
               this.editData = data.data;
+              console.log(this.editData)
               if(this.editData != undefined)
               {
                 this.userProfileForm = this.fb.group({
@@ -363,6 +364,7 @@ export class UsereditprofileComponent implements OnInit {
     value.userId = this.loginUserId;
     if(changePasswordForm.valid)
     {
+      console.log(value);
           this.loginService.ChangePassword(value).subscribe((data:any)=>{
         if(data.result==1)
         {

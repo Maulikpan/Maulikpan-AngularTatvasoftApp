@@ -34,16 +34,33 @@ builder.Services.AddScoped<BALLogin>();
 builder.Services.AddScoped<DALLogin>();
 builder.Services.AddScoped<BALAdminUser>();
 builder.Services.AddScoped<DALAdminUser>();
+builder.Services.AddScoped<DALMission>();
+builder.Services.AddScoped<BALMission>();
+builder.Services.AddScoped<DALMissionSkill>();
+builder.Services.AddScoped<BALMissionSkill>();
+builder.Services.AddScoped<BALMissionTheme>();
+builder.Services.AddScoped<DALMissionTheme>();
+builder.Services.AddScoped<DALCommon>();
+builder.Services.AddScoped<BALCommon>();
 builder.Services.AddScoped<JwtService>();
 
-builder.Services.AddCors(option =>
+builder.Services.AddCors(options =>
 {
-    option.AddPolicy("MyPolicy", builder =>
-    {
-        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
 });
 var app = builder.Build();
+var env = app.Services.GetService<IWebHostEnvironment>();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+        System.IO.Path.Combine(app.Environment.ContentRootPath, "WWWRoot", "UploadMissionImage", "Mission")),
+    RequestPath = "/UploadMissionImage/Mission"
+});
+
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -54,7 +71,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("MyPolicy");
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -20,7 +20,7 @@ export class MissionApplicationComponent implements OnInit {
     this.FetchMissionApplicationList();
   }
 
-  getStatus(status) {
+  getStatus(status:boolean) {
     return status ? 'Approve' : 'Pending';
   }
 
@@ -55,7 +55,7 @@ export class MissionApplicationComponent implements OnInit {
     );
   }
   DeleteMissionApplication(value: any) {
-    this.service.MissionApplicationDelete(value).subscribe(
+    this.service.MissionApplicationDelete(value.i).subscribe(
       (data: any) => {
         if (data.result == 1) {
           this.toast.success({detail:"SUCCESS",summary:data.data,duration:3000});

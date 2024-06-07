@@ -17,25 +17,20 @@ namespace Business_logic_Layer
             _dalAdminUser = dalAdminUser;
         }
 
-        public async Task<List<UserDetail>> UserDetailAsync()
+        public async Task<List<UserDetail>> UserDetailsAsync()
         {
-            try
-            {
+            return await _dalAdminUser.UserDetailsListAsync();
+        }
 
-                var userDetails =  await _dalAdminUser.UserDetailsListAsync();
-                
-                if (userDetails == null || userDetails.Count == 0)
-                {
-                    return null;
-                }
-                return userDetails;
-                
-            }
-            catch(Exception ex)
-            {
-                throw;
-            }
-            return null;
+        public async Task<string> DeleteUserAndUserDetailAsync(int userId)
+        {
+            return await _dalAdminUser.DeleteUserAndUserDetailAsync(userId);
+        }
+       
+        public List<MissionApplication> GetMissionApplicationList()
+        {
+            return _dalAdminUser.GetMissionApplicationList();
         }
     }
+
 }

@@ -18,7 +18,9 @@ export class LoginComponent implements OnInit {
   formValid:boolean;
   ngOnInit(): void {
     this.loginUser();
+    console.log(this.loginForm);
   }
+  
   loginUser()
   {
     this.loginForm = this.fb.group({
@@ -33,46 +35,40 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password') as FormControl;
   }
   OnSubmit(){
-      this.formValid = true;
-      if(this.loginForm.valid)
-      {
-        this.service.loginUser([
-          this.loginForm.value.emailAddress,
-          this.loginForm.value.password
-        ]).subscribe((res:any)=>{
-
-          if(res.result == 1)
-          {
-            if(res.data.message == "Login Successfully")
-            {
+    this.formValid = true;
+    if(this.loginForm.valid) {
+      this.service.loginUser([
+        this.loginForm.value.emailAddress,
+        this.loginForm.value.password
+      ]).subscribe(
+        (res:any) => {
+          console.log(res.result);               
+          if(res.result == 1) {
+            if(res.data.message == "Login Successfully") {
               this.service.setToken(res.data.data);
               let tokenpayload = this.service.decodedToken();
               this.service.setCurrentUser(tokenpayload);
-
+  
               this.toast.success({detail:"SUCCESS",summary:res.data.message,duration:3000});
-              if(tokenpayload.userType == 'admin')
-              {
+              if(tokenpayload.userType == 'admin') {
                 this.router.navigate(['admin/dashboard']);
-              }
-              else
-              {
+              } else {
                 this.router.navigate(['/home']);
               }
-
-            }
-            else
-            {
-              // this.toastr.error(res.data.message);
+            } else {
               this.toast.error({detail:"ERROR",summary:res.data.message,duration:3000});
             }
-          }
-          else
-          {
-            // this.toastr.error(res.message);
+          } else {
             this.toast.error({detail:"ERROR",summary:res.message,duration:3000});
           }
-        });
-        this.formValid = false;
-      }
+        },
+        (error) => {
+          console.error('Login error', error);
+          this.toast.error({detail:"ERROR",summary:'Login failed',duration:3000});
+        }
+      );
+      this.formValid = false;
+    }
   }
+  
 }

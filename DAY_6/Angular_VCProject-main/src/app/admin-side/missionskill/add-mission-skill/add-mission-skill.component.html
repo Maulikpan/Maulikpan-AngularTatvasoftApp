@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
   <app-sidebar></app-sidebar>
    <div class="content">
@@ -13,6 +14,13 @@
                   <input type="hidden" formControlName="id">
                   
                   <div class="form-group">
+
+                    <div class="col-sm-6">
+                      <label class="col-form-label">Skill Name</label>
+                      <textarea class="form-control" row="3" placeholder="Enter your Skill Name"
+                        formControlName="skillName"></textarea>
+                      
+                    </div>
                     <label class="col-form-label">Status</label>
                     <select class="form-select"formControlName="status" [class.error]="addMissionSkillForm.controls['status'].dirty && addMissionSkillForm.hasError('required','status')">
                       <option value="active">Active</option>
@@ -35,4 +43,3 @@
      </div>
    </div>
  </div>
-

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { data } from 'jquery';
 import { NgToastService } from 'ng-angular-popup';
 import { ToastrService } from 'ngx-toastr';
 import { AdminloginService } from 'src/app/service/adminlogin.service';
@@ -58,28 +59,28 @@ export class AddUserComponent implements OnInit {
     return this.registerForm.get('confirmPassword') as FormControl;
   }
   OnSubmit(){
-
-      this.formValid = true;
-      if(this.registerForm.valid)
-      {
-        let register = this.registerForm.value;
-        register.userType = 'user';
-        this.service.registerUser(register).subscribe((data:any)=>{
-          if(data.result==1)
-          {
-            //this.toastr.success(data.data);
-            this.toast.success({detail:"SUCCESS",summary:data.data,duration:3000});
+    this.formValid = true;
+    if (this.registerForm.valid) {
+      let register = this.registerForm.value;
+      register.userType = 'user';
+      register.isDeleted = false;
+      console.log(register)
+      this.service.registerUser(register).subscribe({
+        next: (data: any) => {
+          if (data.result == 1) {
+            this.toast.success({ detail: "SUCCESS", summary: data.data, duration: 3000 });
             setTimeout(() => {
               this.router.navigate(['userPage']);
             }, 1000);
+          } else {
+            this.toast.error({ detail: "ERROR", summary: data.message, duration: 3000 });
           }
-          else
-          {
-            //this.toastr.error(data.message);
-            this.toast.error({detail:"ERROR",summary:data.message,duration:3000});
-          }
-        })
-          this.formValid = false;
-      }
+        },
+        error: (error) => {
+          this.toast.error({ detail: "ERROR", summary: "An error occurred while registering the user.", duration: 3000 });
+        }
+      });
+      this.formValid = false;
+    }
   }
 }

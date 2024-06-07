@@ -74,7 +74,7 @@
             <div class="col-sm-6">
               <label class="col-form-label">Country<span class="text-success">*</span></label>
               <select class="form-select" (change)="CityList($event)" formControlName="countryId">
-                <option *ngFor="let item of countryList" value="{{item.value}}">  {{item.text}}</option>
+                <option *ngFor="let item of countryList" value="{{item.id}}">  {{item.countryName}}</option>
               </select>
               <span class="text-danger" *ngIf="userProfileForm.controls['countryId'].dirty && userProfileForm.hasError('required','countryId')">Please Select Country</span>
             </div>
@@ -82,7 +82,7 @@
               <label class="col-form-label">City<span class="text-success">*</span></label>
               <select class="form-select" formControlName="cityId">
                 <option value="">Select City</option>
-                <option *ngFor="let item of cityList" value="{{item.value}}">{{item.text}}</option>
+                <option *ngFor="let item of cityList" value="{{item.id}}">{{item.cityName}}</option>
               </select>
               <span class="text-danger" *ngIf="userProfileForm.controls['cityId'].dirty && userProfileForm.hasError('required','cityId')">Please Select City</span>
             </div>
